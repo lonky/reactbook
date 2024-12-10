@@ -28,7 +28,7 @@ jobs:
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist  # Укажите путь к вашей директории с билдом
-          
+          publish_dir: ./dist  # Путь к директории с билдом
+
       - name: Set GitHub Pages URL
-        run: echo "GitHub Pages URL: https://${{ github.repository_owner }}.github.io/${{ github.repository }}" 
+        run: echo "GitHub Pages URL: https://${GITHUB_ACTOR}.github.io/${GITHUB_REPOSITORY}"
