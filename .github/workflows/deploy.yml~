@@ -31,4 +31,4 @@ jobs:
           publish_dir: ./dist  # Путь к директории с билдом
 
       - name: Set GitHub Pages URL
-        run: echo "GitHub Pages URL: https://${GITHUB_ACTOR}.github.io/${GITHUB_REPOSITORY}"
+        run: echo "GitHub Pages URL: https://${{ github.actor }}.github.io/${{ github.repository }}"
