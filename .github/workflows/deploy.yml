@@ -3,7 +3,7 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - main  # Вы можете использовать другую ветку для деплоя
+      - main  # или другая ветка для деплоя
 
 jobs:
   build:
@@ -28,6 +28,7 @@ jobs:
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist  # Укажите директорию с билдом
-          # Убираем необходимость использовать gh-pages ветку
-          force_orphan: true  # Это заставит деплоить на текущую ветку
+          publish_dir: ./dist  # Укажите путь к вашей директории с билдом
+          
+      - name: Set GitHub Pages URL
+        run: echo "GitHub Pages URL: https://${{ github.repository_owner }}.github.io/${{ github.repository }}" 
