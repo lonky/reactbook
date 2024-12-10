@@ -3,7 +3,7 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - main  # или другая ветка для деплоя
+      - main
 
 jobs:
   build:
@@ -16,23 +16,16 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 18  # Укажите нужную версию Node.js
+          node-version: 18
 
       - name: Install dependencies
-        run: npm install
+        run: npm install  # Убедитесь, что зависимости установлены
 
       - name: Build project
-        run: npm run build  # Выполнение билда проекта
+        run: npm run build  # Сборка проекта с Vite
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist  # Путь к директории с билдом
-
-      - name: Set GitHub Pages URL
-        run: |
-          echo "GitHub Pages URL: https://${GITHUB_ACTOR}.github.io/${GITHUB_REPOSITORY}"
-        env:
-          GITHUB_ACTOR: ${{ github.actor }}
-          GITHUB_REPOSITORY: ${{ github.repository }}
+          publish_dir: ./dist
