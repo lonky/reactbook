@@ -30,7 +30,9 @@ jobs:
           path: ./dist
 
   deploy:
-    name: Deploy
+    environment:
+        name: Deploy
+        url: ${{ steps.deployment.outputs.page_url }}
     needs: build
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
