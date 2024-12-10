@@ -3,7 +3,7 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - main  # Запускается при пуше в ветку main
+      - main
 
 jobs:
   build:
@@ -13,19 +13,34 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 18  # Укажите нужную версию Node.js
+          node-version: 18
 
       - name: Install dependencies
-        run: npm install  # Установите все зависимости
+        run: npm ci  # Используем ci вместо install для более надежной установки
 
       - name: Build project
-        run: npm run build  # Выполняем билд проекта с Vite
+        run: npm run build
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist
+          path: dist
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist  # Публикуем билд из папки dist
+          publish_dir: ./dist
+          publish_branch: gh-pages
